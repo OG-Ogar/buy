@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buyer Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1c1e21;
+        }
+
+        /* TOP NAVIGATION */
+
+        .topbar {
+            height: 60px;
+            background: white;
+            border-bottom: 1px solid #dddfe2;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 25px;
+
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1877f2;
+        }
+
+        .top-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            background: #e4e6eb;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* PAGE */
+
+        .page {
+            display: grid;
+            grid-template-columns: 220px 1fr 280px;
+            gap: 20px;
+
+            max-width: 1400px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* LEFT SIDEBAR */
+
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-item {
+            padding: 12px 5px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        /* MAIN */
+
+        .main {
+            min-width: 0;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .welcome-card p {
+            color: #65676b;
+        }
+
+        /* ORDER FORM */
+
+        .order-form-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .order-form-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 11px;
+
+            border: 1px solid #ccd0d5;
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        .order-button {
+            width: 100%;
+            padding: 12px;
+
+            background: #1877f2;
+            color: white;
+
+            border: none;
+            border-radius: 6px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .order-button:hover {
+            background: #166fe5;
+        }
+
+        /* MY ORDERS */
+
+        .section-title {
+            margin-bottom: 15px;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .order-id {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff4cc;
+            color: #8a6500;
+        }
+
+        .accepted {
+            background: #d9f7e5;
+            color: #16803c;
+        }
+
+        /* ORDER INFORMATION */
+
+        .order-info {
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+
+            padding: 15px 0;
+
+            display: grid;
+            gap: 10px;
+        }
+
+        .order-info-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .order-info-label {
+            color: #65676b;
+        }
+
+        .order-info-value {
+            font-weight: bold;
+        }
+
+        /* APPROVED MESSAGE */
+
+        .approval-notification {
+            margin-top: 18px;
+            padding: 16px;
+
+            background: #e8f7ee;
+            border: 1px solid #b7e4c7;
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #16803c;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+
+            flex-shrink: 0;
+
+            background: #22c55e;
+            color: white;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .approval-notification strong {
+            font-size: 16px;
+        }
+
+        .approval-notification p {
+            margin-top: 4px;
+            color: #287a45;
+        }
+
+        /* PENDING MESSAGE */
+
+        .pending-notification {
+            margin-top: 18px;
+            padding: 16px;
+
+            background: #fff8e1;
+            border: 1px solid #f1d98b;
+
+            border-radius: 10px;
+
+            color: #765900;
+        }
+
+        .pending-notification p {
+            margin-top: 5px;
+        }
+
+        /* RIGHT SIDEBAR */
+
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            color: #65676b;
+            line-height: 1.5;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            .page {
+                grid-template-columns: 180px 1fr;
+            }
+
+            .right-sidebar {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .page {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP NAVIGATION -->
+
+    <div class="topbar">
+
+        <div class="logo">
+            Provision Market
+        </div>
+
+        <div class="top-links">
+
+            <button class="top-button">
+                Buyer
+            </button>
+
+            <button class="top-button">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAGE -->
+
+    <div class="page">
+
+        <!-- LEFT SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <h3>
+                Buyer Menu
+            </h3>
+
+            <div class="sidebar-item">
+                Home
+            </div>
+
+            <div class="sidebar-item">
+                My Orders
+            </div>
+
+            <div class="sidebar-item">
+                Saved Items
+            </div>
+
+            <div class="sidebar-item">
+                My Profile
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main">
+
+            <!-- WELCOME -->
+
+            <div class="welcome-card">
+
+                <h2>
+                    Welcome, Buyer
+                </h2>
+
+                <p>
+                    Place an order and track your order status here.
+                </p>
+
+            </div>
+
+
+            <!-- ORDER FORM -->
+
+            <div class="order-form-card">
+
+                <h3>
+                    Place an Order
+                </h3>
+
+                <form action="/order" method="POST">
+
+                    <div class="form-group">
+
+                        <label>
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="customer"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Item
+                        </label>
+
+                        <input
+                            type="text"
+                            name="item"
+                            placeholder="Example: Rice"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            name="quantity"
+                            min="1"
+                            placeholder="Enter quantity"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="order-button"
+                    >
+                        Place Order
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- MY ORDERS -->
+
+            <h2 class="section-title">
+                My Orders
+            </h2>
+
+
+            {{if .}}
+
+                {{range .}}
+
+                    <div class="order-card">
+
+                        <!-- ORDER HEADER -->
+
+                        <div class="order-header">
+
+                            <div class="order-id">
+                                Order #{{.ID}}
+                            </div>
+
+
+                            {{if eq .Status "Accepted"}}
+
+                                <div class="status accepted">
+                                    ✓ Accepted
+                                </div>
+
+                            {{else}}
+
+                                <div class="status pending">
+                                    Pending
+                                </div>
+
+                            {{end}}
+
+                        </div>
+
+
+                        <!-- ORDER INFORMATION -->
+
+                        <div class="order-info">
+
+                            <div class="order-info-row">
+
+                                <span class="order-info-label">
+                                    What you ordered
+                                </span>
+
+                                <span class="order-info-value">
+                                    {{.Item}}
+                                </span>
+
+                            </div>
+
+
+                            <div class="order-info-row">
+
+                                <span class="order-info-label">
+                                    Quantity
+                                </span>
+
+                                <span class="order-info-value">
+                                    {{.Quantity}}
+                                </span>
+
+                            </div>
+
+
+                            <div class="order-info-row">
+
+                                <span class="order-info-label">
+                                    Customer
+                                </span>
+
+                                <span class="order-info-value">
+                                    {{.Customer}}
+                                </span>
+
+                            </div>
+
+
+                            <div class="order-info-row">
+
+                                <span class="order-info-label">
+                                    Order status
+                                </span>
+
+                                <span class="order-info-value">
+                                    {{.Status}}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACCEPTED -->
+
+                        {{if eq .Status "Accepted"}}
+
+                            <div class="approval-notification">
+
+                                <div class="notification-icon">
+                                    ✓
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Order Accepted by Seller
+                                    </strong>
+
+                                    <p>
+                                        Your order for
+                                        <strong>{{.Item}}</strong>
+                                        has been approved by the seller.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                        <!-- PENDING -->
+
+                        {{else}}
+
+                            <div class="pending-notification">
+
+                                <strong>
+                                    Waiting for Seller
+                                </strong>
+
+                                <p>
+                                    Your order for
+                                    <strong>{{.Item}}</strong>
+                                    is waiting for the seller to approve it.
+                                </p>
+
+                            </div>
+
+                        {{end}}
+
+                    </div>
+
+                {{end}}
+
+
+            {{else}}
+
+                <div class="order-card">
+
+                    <h3>
+                        No orders yet
+                    </h3>
+
+                    <p style="margin-top: 8px; color: #65676b;">
+                        When you place an order, it will appear here.
+                    </p>
+
+                </div>
+
+            {{end}}
+
+        </main>
+
+
+        <!-- RIGHT SIDEBAR -->
+
+        <aside class="right-sidebar">
+
+            <div class="info-card">
+
+                <h3>
+                    My Orders
+                </h3>
+
+                <p>
+                    You can see what you ordered and whether the seller has accepted your order.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <h3>
+                    Order Status
+                </h3>
+
+                <p>
+                    🟡 Pending means the seller has not approved the order yet.
+                </p>
+
+                <p style="margin-top: 10px;">
+                    🟢 Accepted means the seller has approved your order.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</body>
+</html>

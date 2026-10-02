@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Provision Booking</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* LEFT SIDE */
+
+        .login-section {
+            width: 30%;
+            background: #1f2937;
+            color: white;
+            padding: 50px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-section h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .login-section p {
+            color: #d1d5db;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .role-button {
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            background: white;
+            color: #1f2937;
+            transition: 0.2s;
+        }
+
+        .role-button:hover {
+            background: #22c55e;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* RIGHT SIDE */
+
+        .market-section {
+            width: 70%;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .market-header {
+            margin-bottom: 30px;
+        }
+
+        .market-header h2 {
+            font-size: 30px;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .market-header p {
+            color: #6b7280;
+        }
+
+        /* PRODUCT GRID */
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image {
+            height: 130px;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            font-size: 17px;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+
+        .product-info p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .available {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 8px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+            .page {
+                flex-direction: column;
+            }
+
+            .login-section,
+            .market-section {
+                width: 100%;
+            }
+
+            .login-section {
+                padding: 35px 25px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- LEFT SIDE: LOGIN -->
+
+    <section class="login-section">
+
+        <h1>Provision Market</h1>
+
+        <p>
+            Buy the food and provisions you need
+            from available sellers around you.
+        </p>
+
+        <form action="/login" method="POST">
+
+            <button
+                class="role-button"
+                type="submit"
+                name="role"
+                value="buyer">
+                🛒 Continue as Buyer
+            </button>
+
+            <button
+                class="role-button"
+                type="submit"
+                name="role"
+                value="seller">
+                🏪 Continue as Seller
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- RIGHT SIDE: AVAILABLE PRODUCTS -->
+
+    <section class="market-section">
+
+        <div class="market-header">
+
+            <h2>Available Provisions</h2>
+
+            <p>
+                See some of the items currently available from sellers.
+            </p>
+
+        </div>
+
+
+        <div class="product-grid">
+
+            <div class="product-card">
+                <div class="product-image">💧</div>
+
+                <div class="product-info">
+                    <h3>Drinking Water</h3>
+                    <p>Available from sellers</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🧴</div>
+
+                <div class="product-info">
+                    <h3>Mineral Water</h3>
+                    <p>Bottled water</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🍚</div>
+
+                <div class="product-info">
+                    <h3>Rice</h3>
+                    <p>Different quantities</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🫘</div>
+
+                <div class="product-info">
+                    <h3>Beans</h3>
+                    <p>Fresh beans</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🌽</div>
+
+                <div class="product-info">
+                    <h3>Garri</h3>
+                    <p>Available in different sizes</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🍞</div>
+
+                <div class="product-info">
+                    <h3>Bread</h3>
+                    <p>Fresh bread</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🍅</div>
+
+                <div class="product-info">
+                    <h3>Tomatoes</h3>
+                    <p>Fresh tomatoes</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🥬</div>
+
+                <div class="product-info">
+                    <h3>Vegetables</h3>
+                    <p>Fresh vegetables</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🥤</div>
+
+                <div class="product-info">
+                    <h3>Soft Drinks</h3>
+                    <p>Cold drinks available</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🍌</div>
+
+                <div class="product-info">
+                    <h3>Fruits</h3>
+                    <p>Fresh fruits</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🧅</div>
+
+                <div class="product-info">
+                    <h3>Onions</h3>
+                    <p>Fresh onions</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+
+            <div class="product-card">
+                <div class="product-image">🌶️</div>
+
+                <div class="product-info">
+                    <h3>Pepper</h3>
+                    <p>Fresh pepper</p>
+                    <span class="available">Available</span>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>
